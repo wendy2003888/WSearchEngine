@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="navi">
+    <div><a id="sublogo" href="{{url_for('index')}}"> > w < </a></div>
+    <form  action="{{url_for('search')}}" method="POST">
+        <div class= "border">
+        <div class="sub_box" id="sub_box">
+            <input class="inputbox" name="query" type="text" maxlength="2048" autocomplete="off" title="Search"  value="{{q}}"  role="combobox" spellcheck="false"/>
+        </div>
+        <button class="bnt" id="sub_bnt" type="submit" >Search</button>
+        </div>
+    </form>            
+</div>
+<div id="statics_bar">
+</div>
+<div class="left">
+    {% if pagination.page == 1%}
+        <div id="resultStats"> about {{ pagination.total }} results<nobr> ( {{ time_dif }} seconds)&nbsp;</nobr></div>
+    {% else %}
+        <div id="resultStats"> page {{ pagination.page }} about {{ pagination.total }} results<nobr> ( {{ time_dif }} seconds)&nbsp;</nobr></div>
+    {% endif %}
+    <div id="result">
+        {% autoescape false %}
+        {% for data in results %}
+            <div class="piece">
+                <div class="rc" data-hveid="28">
+                    <h3 class="title">
+                        <a class = "title" href="{{data[0]}}" target="_blank">{{data[1]}}</a>
+                    </h3>
+                    <div class="content">
+                        <div class="link" style="white-space:nowrap">
+                            <a href="{{data[0]}}" target="_blank"><cite class="link">{{ data[0] }}</cite></a>
+                        </div>
+                        <div  class="summary">
+                            {{ data[2] }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% endautoescape %}
+        <div class="pagination">
+            {% if pagination.has_prev %}
+                <a href="{{ url_for('search', page = pagination.page - 1)}}">&laquo; Prev</a> 
+            {% endif %}
+            {% for page in pagination.iter_pages() %}
+                {% if page != None %}
+                    {% if page != pagination.page %}
+                        <a href="{{ url_for('search', page = page)}}">{{ page }}</a> 
+                    {% else %}
+                    <strong>{{ page }}</strong>
+                    {% endif %}
+                {% else %}
+                    <span class="ellipsis">…</span>
+                {% endif %}
+            {% endfor %}
+            {% if pagination.has_next %}
+                <a href="{{ url_for('search', page = pagination.page + 1)}}">Next &raquo;</a> 
+            {% endif %}
+        </div>  
+    </div>
+</div>
+{% endblock %}

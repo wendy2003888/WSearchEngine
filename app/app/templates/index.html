@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<center>
+    <div class="upbox">
+        <h1 width="272" height="92" id="logo" > > ω < Search Engine</h1>
+    </div>
+    <form  action="{{url_for('search')}}" method="POST">
+        <div style="height:118px">
+                <div class="box_border" id="box_border">
+                <input class="inputbox" name="query" type="text" maxlength="2048" autocomplete="off" title="Search"  value=""  role="combobox" spellcheck="false"/>
+                </div>
+            <div  style="padding-top:18px">
+                <button class="bnt" type="submit" >Search</button>
+            </div>
+        </div>
+    </form>            
+</center>
+    
+{% endblock %}
