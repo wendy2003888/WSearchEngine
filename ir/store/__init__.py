@@ -7,7 +7,7 @@ from config import DB_URI
 
 
 
-engine = create_engine(DB_URI, encoding='utf-8',echo=True, pool_recycle=10)
+engine = create_engine(DB_URI, encoding='utf-8',echo=False, pool_recycle=10)
 DB_Session = sessionmaker(bind=engine)
 session = DB_Session()
 

@@ -42,8 +42,8 @@ class Search():
                         #print '%d. doc_id=%s, weight=%d%s' % (n, match['id'], match['weight'], attrsdump)
                         n += 1
                         source = match['attrs']['tid']
-                        opts = {'before_match':'<span>', 'after_match':'</span>'}
-                        title_opts = {'before_match':'<span>', 'after_match':'</span>', 'chunk_separator': '', 'around': 10}
+                        opts = {'before_match':'<span>', 'after_match':'</span>', 'chunk_separator': '...', 'around': 3}
+                        title_opts = {'before_match':'<span>', 'after_match':'</span>', 'chunk_separator': '', 'around': 8}
                         if source == 1:
                             data = session.query(IMDBitem).filter_by(_id = match['id']).first()
                             if data:
@@ -81,6 +81,7 @@ class Search():
                                 else:
                                     for entry in res:
                                         detail += entry
+                                print t
                                 m.append(( data.url, t.decode('utf-8'), detail.decode('utf-8')))
         return (m, td, total)
         

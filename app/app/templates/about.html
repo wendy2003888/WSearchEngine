@@ -1,13 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="navi">
+    <div><a id="sublogo" href="{{url_for('index')}}"> > w < </a></div>
+    <form  action="{{url_for('search')}}" method="POST">
+        <div class= "border">
+        <div class="sub_box" id="sub_box">
+            <input class="inputbox" name="query" type="text" maxlength="2048" autocomplete="off" title="Search"  value="{{q}}"  role="combobox" spellcheck="false"/>
+        </div>
+        <button class="bnt" id="sub_bnt" type="submit" >Search</button>
+        </div>
+    </form>            
+</div>
 <center>
     <div>
     <p>这是一个小型全文搜索引擎</p>
-    <p>由wendy2003888一个人完成，运用Python编写。</p>
+    <p>由wendy2003888(黄楚冰)一个人完成，运用Python编写。</p>
     <p>主要工具有Scrapy, Coreseek|Sphinx(search), jieba, Flask</p>
     <p>代码将会放到Github上，会在有时间的时候把全部搭建过程写到readme里</p>
-    <p>也会更新到我的note里: 107.170.237.213:8080</p>
-    <p>Gtihub链接: https://github.com/wendy2003888/WSearchEngine</p>
+    <p>也会更新到我的note里(很不幸需要翻墙): <a href="https://107.170.237.213:8080" target="_blank">107.170.237.213:8080</a></p>
+    <p>Gtihub链接: <a href="https://github.com/wendy2003888/WSearchEngine" target="_blank">https://github.com/wendy2003888/WSearchEngine</a></p>
     <p>有任何问题请联系我：wendyh2003888@gmail.com</p>
     </div>          
 </center>

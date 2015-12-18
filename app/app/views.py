@@ -13,6 +13,11 @@ from app import app, SE
 from sphinx import en_stopwd, cn_stopwd
 from config import PER_PAGE
 
+import sys
+defaultencoding = 'utf-8'
+if sys.getdefaultencoding() != defaultencoding:
+    reload(sys)
+    sys.setdefaultencoding(defaultencoding)
 
 def throw_exception(f):
     @wraps(f)
@@ -45,8 +50,7 @@ def query_handler(q):
     if not cn_cleans:
         cn_cleans = cn_tokens
         
-            # cn_cleans.append(jieba.analyse.extract_tags(s, topK=1))
-    print cn_cleans
+    # cn_cleans.append(jieba.analyse.extract_tags(s, topK=1))
     '''英文词干化'''
     porter =nltk.PorterStemmer()
     en_result= [porter.stem(t) for t in en_cleans]
@@ -105,7 +109,7 @@ q = []
 
 @app.route('/search', methods = ['GET','POST'])
 @app.route('/search/<int:page>/', methods = ['GET','POST'])
-@throw_exception
+#@throw_exception
 def search(page = 0):
     try:
         global query,q
@@ -117,6 +121,7 @@ def search(page = 0):
             res = SE.getResult(q,'*', st)
             results, time_dif = res[0], res[1]
             pagination = Pagination(page=page, total_count=res[2], per_page=PER_PAGE)
+            query = query.encode('utf-8') if type(query) == type(u'') else query
             return render_template('results.html', results = results, q = query, time_dif=time_dif, pagination=pagination)
         else:
             if page != 0 and query != '':
@@ -124,7 +129,7 @@ def search(page = 0):
                 res = SE.getResult(q,'*', st)
                 results, time_dif = res[0], res[1]
                 pagination = Pagination(page=page, total_count=res[2], per_page=PER_PAGE)
-                return render_template('results.html', results = results, q = query, time_dif=time_dif, pagination=pagination)
+                return render_template('results.html', results = results, q = query.encode('utf-8'), time_dif=time_dif, pagination=pagination)
             else:
 
                 return redirect(url_for('index'))

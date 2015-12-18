@@ -53,6 +53,7 @@ class storeIFENG(object):
                     obj[k] = c
             else:
                 obj[k] = v
+        obj['content'] = re.sub(r'<.*?>','',obj['content'])
         data = newsItem(obj['title'], obj['date'], obj['content'], obj['url'])
         if 'orgUrl':
             data2 = newsItem(obj['title'], obj['date'], obj['content'], obj['orgUrl'])
